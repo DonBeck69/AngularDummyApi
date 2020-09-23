@@ -34,7 +34,7 @@ export class EmployeeComponent implements OnInit {
       }
       http.get<EmployeeData>(this.getPath, { headers: this.headers }).subscribe(result => {
         this.employeeData = result;
-        console.log(result);
+        //console.log(result);
       }, error => console.error(error));
 
     });
