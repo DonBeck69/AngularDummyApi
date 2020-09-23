@@ -1,5 +1,6 @@
 <p>{{employeeData.message}}</p>
 <button type="button" class="btn btn-primary" (click)="onSortClick()">Sort by Salary (Decending)</button>
+<button type="button" class="btn btn-primary" (click)="onSortClickAge()">Sort by Age (Decending)</button>
 
 <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="employeeData">
     <thead>
@@ -7,6 +8,7 @@
         <th>ID</th>
         <th>Name</th>
         <th>Salary</th>
+        <th>Age</th>
       </tr>
     </thead>
     <tbody>
@@ -14,6 +16,7 @@
         <td>{{ employee.id }}</td>
         <td>{{ employee.employee_name }}</td>
         <td>{{ employee.employee_salary }}</td>
+        <td>{{ employee.employee_age }}</td>
       </tr>
     </tbody>
   </table>

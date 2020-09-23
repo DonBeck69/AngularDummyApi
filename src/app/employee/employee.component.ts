@@ -49,6 +49,11 @@ export class EmployeeComponent implements OnInit {
     this.employeeData.data = this.SortEmployeesBySalary(this.employeeData.data);
   }
 
+  public onSortClickAge(): void {
+    this.employeeData.data = this.SortEmployeesByAge(this.employeeData.data);
+  }
+
+
   // sorts the array of Employees object by salary. 
   private SortEmployeesBySalary(Employees: Array<Employee>): Array<Employee> {
     let ret: Array<Employee> = new Array<Employee>();
@@ -59,6 +64,23 @@ export class EmployeeComponent implements OnInit {
         return 1;
       }
       if (e2.employee_salary < e1.employee_salary) {
+        return -1;
+      }
+      return 0;
+    });
+
+    return ret;
+  }
+
+  private SortEmployeesByAge(Employees: Array<Employee>): Array<Employee> {
+    let ret: Array<Employee> = new Array<Employee>();
+
+    // sort function
+    ret = Employees.sort((e1: Employee, e2: Employee) => {
+      if (e2.employee_age > e1.employee_age) {
+        return 1;
+      }
+      if (e2.employee_age < e1.employee_age) {
         return -1;
       }
       return 0;
