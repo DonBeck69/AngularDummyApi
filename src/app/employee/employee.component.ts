@@ -12,21 +12,24 @@ export class EmployeeComponent implements OnInit {
 
   public employeeData: EmployeeData = new EmployeeData();
 
-  private headers: HttpHeaders = new HttpHeaders({ 
-    "Content-Type": "application/json", 
+  // mostley for justin case. Helps with CORS issus.  
+  private headers: HttpHeaders = new HttpHeaders({
+    "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET,OPTIONS",
     "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
   });
 
-  //private getPath: string = "api/v1/employees";
+  // default json file in assets and included in the build
   private getPath: string = "assets/employee.json";
 
-  constructor(private http: HttpClient, private activatedRoute: ActivatedRoute) { 
+  constructor(private http: HttpClient, private activatedRoute: ActivatedRoute) {
+    // use the query parameter to use iether the included json file data or go to
+    // the web site.
     this.activatedRoute.queryParamMap.subscribe((params: ParamMap) => {
       console.log(params);
-      if (params["params"]["web"] === "true")
-      {
+      if (params["params"]["web"] === "true") {
+        //this uses a proxy, look at proxy.conf.json
         this.getPath = "api/v1/employees";
       }
       http.get<EmployeeData>(this.getPath, { headers: this.headers }).subscribe(result => {
@@ -41,38 +44,31 @@ export class EmployeeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // one button, one field, one direction sort. Initiated by the "sort" button
   public onSortClick(): void {
     this.employeeData.data = this.SortEmployeesBySalary(this.employeeData.data);
   }
 
+  // sorts the array of Employees object by salary. 
   private SortEmployeesBySalary(Employees: Array<Employee>): Array<Employee> {
     let ret: Array<Employee> = new Array<Employee>();
-    let salaries: Array<number> = new Array<number>();
-    // build a number array of salaries
-    Employees.forEach((employee: Employee) => {
-      salaries.push(employee.employee_salary);
-    });
 
     // sort function
-    salaries.sort((num1: number, num2: number) => {
-      if (num2 > num1) {
+    ret = Employees.sort((e1: Employee, e2: Employee) => {
+      if (e2.employee_salary > e1.employee_salary) {
         return 1;
       }
-      if (num2 < num1) {
+      if (e2.employee_salary < e1.employee_salary) {
         return -1;
       }
-    });
-
-    // loop sorted item number arry, find matching missing list item and add to result
-    salaries.forEach(itemNumber => {
-      let ldd: Employee = Employees.find(doc => {
-        return doc.employee_salary === itemNumber;
-      });
-      ret.push(ldd);
+      return 0;
     });
 
     return ret;
   }
 
 
+
+
 }
+

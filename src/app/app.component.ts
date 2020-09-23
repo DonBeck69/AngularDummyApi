@@ -14,6 +14,7 @@ export class AppComponent {
   }
   public title: string =  "Angular test"
 
+  // click function, send app to "employee" route + web query parameter
   public onClickEmployee(web: boolean) {
     this.router.navigate(["employee"], {queryParams: {web: web}});
   }
