@@ -1,0 +1,19 @@
+<p>{{employeeData.message}}</p>
+<button type="button" class="btn btn-primary" (click)="onSortClick()">Sort by Salary (Decending)</button>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="employeeData">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Salary</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of employeeData.data">
+        <td>{{ employee.id }}</td>
+        <td>{{ employee.employee_name }}</td>
+        <td>{{ employee.employee_salary }}</td>
+      </tr>
+    </tbody>
+  </table>
